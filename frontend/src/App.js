@@ -23,6 +23,8 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
   const [stats, setStats] = useState(null);
+  const [editingEntry, setEditingEntry] = useState(null);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(null);
 
   const fetchMoods = async () => {
     try {
