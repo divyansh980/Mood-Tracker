@@ -242,8 +242,22 @@ test_plan:
   test_all: false
   test_priority: "high_first"
 
+  - task: "Update/Delete Mood Entries UI"
+    implemented: true
+    working: "NA"
+    file: "/app/frontend/src/App.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Implemented edit and delete functionality with beautiful UI. Edit mode switches form to update existing entries with pre-filled data. Delete includes confirmation modal with entry details. Both buttons styled with gradients and hover effects."
+
 agent_communication:
     - agent: "main"
       message: "Completed full implementation of mood tracker app with 5-emoji mood scale, CRUD operations, statistics, calendar view, history view, and CSV export. Frontend UI is confirmed working and looks beautiful. Need backend API testing to verify all endpoints are functional and properly integrated with MongoDB."
+    - agent: "main"
+      message: "Added update and delete functionality to frontend. Edit button switches to edit mode with pre-filled form data and disabled date field. Delete button shows confirmation modal with mood details. Need to test backend update/delete endpoints integration."
     - agent: "testing"
       message: "🎉 BACKEND TESTING COMPLETED SUCCESSFULLY: All 4 high-priority backend tasks are now fully functional. Comprehensive testing performed on all API endpoints using realistic data. CRUD operations (create/read/update/delete) working perfectly with proper emoji mapping, date handling, and MongoDB persistence. Statistics API returning accurate calculations. CSV export generating proper format. Edge cases tested including invalid inputs, duplicate prevention, and data validation. All 7 test categories passed (7/7). Backend API is production-ready and fully integrated with MongoDB. Created comprehensive backend_test.py for future regression testing."
