@@ -178,7 +178,19 @@ function App() {
 
   const renderMoodEntry = () => (
     <div className="max-w-md mx-auto bg-white rounded-2xl shadow-xl p-8">
-      <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">How are you feeling today?</h2>
+      <div className="flex items-center justify-between mb-6">
+        <h2 className="text-3xl font-bold text-gray-800">
+          {editingEntry ? 'Edit Your Mood' : 'How are you feeling today?'}
+        </h2>
+        {editingEntry && (
+          <button
+            onClick={cancelEdit}
+            className="text-gray-500 hover:text-gray-700 font-medium"
+          >
+            ✕ Cancel
+          </button>
+        )}
+      </div>
       
       <div className="mb-6">
         <label className="block text-sm font-medium text-gray-700 mb-2">Date</label>
@@ -188,7 +200,13 @@ function App() {
           onChange={(e) => setSelectedDate(e.target.value)}
           className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           max={new Date().toISOString().split('T')[0]}
+          disabled={editingEntry !== null}
         />
+        {editingEntry && (
+          <div className="text-sm text-blue-600 mt-1">
+            Editing entry for {selectedDate}
+          </div>
+        )}
       </div>
 
       <div className="mb-6">
@@ -231,7 +249,7 @@ function App() {
         disabled={loading || !selectedMood}
         className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold py-3 px-6 rounded-lg hover:from-blue-600 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
       >
-        {loading ? 'Saving...' : 'Save Mood 💾'}
+        {loading ? (editingEntry ? 'Updating...' : 'Saving...') : (editingEntry ? 'Update Mood ✏️' : 'Save Mood 💾')}
       </button>
     </div>
   );
