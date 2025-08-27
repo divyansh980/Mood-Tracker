@@ -234,10 +234,10 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Mood Entry CRUD API"
-    - "Mood Statistics API"
-    - "CSV Export API"
-    - "MongoDB Integration"
+    - "Update/Delete Mood Entries UI"
+    - "Calendar View"
+    - "History View with Stats"
+    - "Data Export Functionality"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
