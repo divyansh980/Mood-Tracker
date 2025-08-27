@@ -57,15 +57,30 @@ function App() {
 
     setLoading(true);
     try {
-      await axios.post(`${API}/moods`, {
+      const requestData = {
         entry_date: selectedDate,
         mood_score: selectedMood,
         notes: notes.trim() || null
-      });
+      };
+
+      let response;
+      if (editingEntry) {
+        // Update existing entry
+        response = await axios.put(`${API}/moods/${selectedDate}`, {
+          mood_score: selectedMood,
+          notes: notes.trim() || null
+        });
+        setMessage('Mood updated successfully! ✨');
+        setEditingEntry(null);
+      } else {
+        // Create new entry
+        response = await axios.post(`${API}/moods`, requestData);
+        setMessage('Mood saved successfully! 🎉');
+      }
       
-      setMessage('Mood saved successfully! 🎉');
       setSelectedMood(null);
       setNotes('');
+      setSelectedDate(new Date().toISOString().split('T')[0]);
       fetchMoods();
       fetchStats();
       
@@ -79,6 +94,34 @@ function App() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const editMoodEntry = (mood) => {
+    setEditingEntry(mood);
+    setSelectedDate(mood.entry_date);
+    setSelectedMood(mood.mood_score);
+    setNotes(mood.notes || '');
+    setCurrentView('entry');
+  };
+
+  const deleteMoodEntry = async (entryDate) => {
+    try {
+      await axios.delete(`${API}/moods/${entryDate}`);
+      setMessage('Mood entry deleted successfully! 🗑️');
+      setShowDeleteConfirm(null);
+      fetchMoods();
+      fetchStats();
+      setTimeout(() => setMessage(''), 3000);
+    } catch (error) {
+      setMessage('Error deleting mood entry. Please try again.');
+    }
+  };
+
+  const cancelEdit = () => {
+    setEditingEntry(null);
+    setSelectedMood(null);
+    setNotes('');
+    setSelectedDate(new Date().toISOString().split('T')[0]);
   };
 
   const exportData = async () => {
