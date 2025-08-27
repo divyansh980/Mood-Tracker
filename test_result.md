@@ -242,6 +242,21 @@ test_plan:
   test_all: false
   test_priority: "high_first"
 
+  - task: "Update/Delete Mood Entries Backend API"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Implemented PUT /api/moods/{date} and DELETE /api/moods/{date} endpoints for updating and deleting mood entries. Update supports partial updates (mood_score only or notes only) with automatic emoji refresh. Delete removes entries from MongoDB with proper 404 handling for non-existent entries."
+        - working: true
+          agent: "testing"
+          comment: "✅ COMPREHENSIVE UPDATE/DELETE TESTING PASSED: All 7 test scenarios completed successfully. UPDATE OPERATIONS: (1) Full update of mood_score and notes with correct emoji mapping ✅ (2) Partial update mood_score only with notes preservation ✅ (3) Partial update notes only with mood/emoji preservation ✅ (4) Update non-existent entry returns proper 404 ✅. DELETE OPERATIONS: (5) Delete existing entry with MongoDB verification ✅ (6) Delete non-existent entry returns proper 404 ✅. FRONTEND INTEGRATION: (7) Complete create→update→delete workflow with statistics verification ✅. All edge cases tested including emoji updates, data persistence, error handling, and database consistency."
+
   - task: "Update/Delete Mood Entries UI"
     implemented: true
     working: "NA"
